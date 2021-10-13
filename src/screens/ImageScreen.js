@@ -3,10 +3,13 @@ import { ScrollView, Text, StyleSheet } from 'react-native';
 import ImageDetail from '../components/ImageDetail';
 
 const ImageScreen = () =>  {
-    return <ScrollView>
-        <ImageDetail 
+    return <ScrollView >
+        <ImageDetail
+          style={{
+            width: '100%'
+          }}
           title="Ken" 
-          imageSource={require('../../assets/ken.jpeg')} 
+          imageSource={require('../../assets/orbits.png')} 
           story="One angry motherfucker and Ryu's twin brother, separated from birth."
           />
         <ImageDetail 
@@ -27,13 +30,6 @@ const ImageScreen = () =>  {
     </ScrollView>
 };
 
-const styles = StyleSheet.create({
-    textStyle: {
-        fontSize: 24,
-        margin: 10
-    }
-
-});
 
 export default ImageScreen;
 

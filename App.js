@@ -2,13 +2,13 @@ import React from 'react';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "./src/screens/HomeScreen";
-import ComponentsScreen from "./src/screens/ComponentsScreen";
+import GuyedScreen from "./src/screens/GuyedScreen";
 import ListScreen from "./src/screens/ListScreen";
 import ImageScreen from "./src/screens/ImageScreen";
 import CounterScreen from "./src/screens/CounterScreen";
-import ColorScreen from "./src/screens/ColorScreen";
+import HotSpotScreen from "./src/screens/HotSpotScreen";
 import SquareScreen from "./src/screens/SquareScreen";
-import TextScreen from "./src/screens/TextScreen";
+import MonopoleScreen from "./src/screens/MonopoleScreen";
 import OnBoarding from "./src/screens/OnBoarding";
 import BoxScreen from "./src/screens/BoxScreen";
 import AppHome from "./src/screens/AppHome";
@@ -30,13 +30,13 @@ import EditScreen from './src/screens/EditScreen';
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Components: ComponentsScreen,
+    GuyedChecklist: GuyedScreen,
     List: ListScreen,
     Image: ImageScreen,
     Counter: CounterScreen,
-    Color: ColorScreen,
+    HotSpotChecklist: HotSpotScreen,
     Square: SquareScreen,
-    Text: TextScreen,
+    MonopoleChecklist: MonopoleScreen,
     OnBoarding: OnBoarding,
     BoxScreen: BoxScreen,
     AppHome: AppHome,

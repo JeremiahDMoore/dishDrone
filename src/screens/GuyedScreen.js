@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
 
-export default function Guyed() {
+export default function GuyedChecklist() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   
@@ -83,7 +83,7 @@ export default function Guyed() {
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={text => setTask(text)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>GO</Text>
+            <Text style={styles.addText}>+</Text>
             
           </View>
         </TouchableOpacity>

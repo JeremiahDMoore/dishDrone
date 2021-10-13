@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
 
 export default function Mono() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   
-
   const handleAddTask = () => {
     Keyboard.dismiss();
 
@@ -26,15 +25,14 @@ export default function Mono() {
                  'Foundation Orbit: Manual orbit, Manual gimbal, center tower foundation in frame',
                  'Lower Compound Orbit: POI = Center of Compound, 25 to 35ft AGL, -30° to -40° gimbal (steeper gimbal OK if higher Alt. needed)',
                  '* Platform Orbits: 0° Gimbal, 5 to 10ft below the mount',
-                 '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal', 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
+                 '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal', 
+                 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
                  'Check Photos on Laptop or Phone, SAVE',
                  'Remove Boards, Secure and Lock the Back',
                  'Lock the Gate: Reconnect Daisy Chain, Yank hard on the lock',
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
-                 ' ',
-                 ' ',
-                ]);
+                 ]);
                       
     setTask(null);
   }
@@ -66,12 +64,24 @@ export default function Mono() {
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
                 </TouchableOpacity>
+                
+                
               )
             })
           }
+          <Image
+          style={{
+            width: '100%'
+          }}
+          title="Ken" 
+          imageSource={require('../../assets/orbits.png')} 
+          story="One angry motherfucker and Ryu's twin brother, separated from birth."
+          />
+
         </View>
-      </View>
         
+      </View>
+      
       </ScrollView>
 
       {/* Write a task */}
@@ -83,12 +93,13 @@ export default function Mono() {
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={text => setTask(text)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+            <Text style={styles.addText}>GO</Text>
             
           </View>
         </TouchableOpacity>
         
       </KeyboardAvoidingView>
+
       
     </View>
   );
@@ -138,4 +149,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addText: {},
+  stretch: {
+    width: 50,
+    height: 200,
+    resizeMode: 'stretch',
+  },
 });

@@ -7,15 +7,15 @@ const HomeScreen = ({ navigation }) => {
   <View>
     <Text style={styles.text}>DISH drone</Text>
     <Button
-      onPress={()=> navigation.navigate('Components')}
+      onPress={()=> navigation.navigate('MonopoleChecklist')}
       title="Monopole/SST Checklist"
     />
     <Button 
-      onPress={()=> navigation.navigate('Text')}
+      onPress={()=> navigation.navigate('GuyedChecklist')}
       title="Guyed Tower Checklist"
     />    
     <Button 
-      onPress={()=> navigation.navigate('Color')}
+      onPress={()=> navigation.navigate('HotSpotChecklist')}
       title="HotSpot Checklist"
     />
     <Button 
