@@ -2,41 +2,46 @@ import React, {useState} from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
 
-export default function Mono() {
+export default function GuyedChecklist() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   
 
-  const handleAddTask = () => {
+  const displayTip = () => {
     Keyboard.dismiss();
 
-    setTaskItems(['JOB: ' + task,
+    setTaskItems([
                  'Flight Plan: Identify Hazards, Contingency Plan, Check Weather/Wind/Temp',
                  'PPE on, Fire Ext. Ready, Phone and Drone Charged',
                  'Log into NOC: Call or Login Online, GET COMBO if needed',
-                 'Hotspot Photos: Transformer, Power Path, H-frames, Meters, Fiber Vaults, Access Road Gate, Compound Gate, Signage',
+                 'Hotspot Photos: Transformer, Power Path, H-frames, Meters, Fiber Vaults, Access Road Gate, Compound Gate, Signage, 6 photos of each guy anchor (all angles)',
                  'Place Boards: Hi and Lo, Sunny Side of Tower, Compound or Wall',                 
-                 'Inspect Drone: Props, Fuselage, Lens/Gimbal, ',
                  'Power Drone ON: Open Litchi, Check and Adjust Camera Settings',
                  'Set Home Point: Drone Up, Flight Check (lights, satties, drift)',
                  'Set POI to Dead Center of Tower and SAVE', 
                  'Tower Overall Orbit: 30 to 50ft above tower, -45° to -60° gimbal',
                  'Upper Compound Orbit: tighten radius, -70° to -80° gimbal',
-                 'Tower Orbits: let photos run, 20 to 35ft above tower, -35° to -45° gimbal, 1 centered orbit for every mount, descend -10ft every orbit until bottom is visible',
-                 'Foundation Orbit: Manual orbit, Manual gimbal, center tower foundation in frame',
+                 'Tower Orbits: let photos run, 20 to 35ft above tower, -35° to -45° gimbal, 1 centered orbit for every mount above top guy pull off',
+                 'Down first Face: With 35° downward gimbal, descend at 2-3mph down the right half of the first face until tower base is in middle of the frame',
+                 'Rotate clockwise to left half of first Face, Up first face With 35° downward gimbal, climb at 2-3mph up the left half of first face until the highest tower appurtenance is in the middle of the frame',
+                 'Rotate clockwise to 2nd Face',
+                 'Down second Face: With 35° downward gimbal, descend at 2-3mph down the right half of the second Face until tower base is in middle of the frame',
+                 'Rotate clockwise to left half of second Face: With 35° downward gimbal, climb at 2-3mph up the left half of the second face until the highest tower appurtenance is in the middle of the frame',
+                 'Rotate Clockwise to 3rd Face',
+                 'Down third Face: With 35° downward gimbal, descend at 2-3mph down the right half of the third face until tower base is in middle of the frame',
+                 'Once at the bottom, complete the tower foundation/scaling orbit',
                  'Lower Compound Orbit: POI = Center of Compound, 25 to 35ft AGL, -30° to -40° gimbal (steeper gimbal OK if higher Alt. needed)',
                  '* Platform Orbits: 0° Gimbal, 5 to 10ft below the mount',
-                 '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal', 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
+                 '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal. tripod 360° CW at 2 points', 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
                  'Check Photos on Laptop or Phone, SAVE',
                  'Remove Boards, Secure and Lock the Back',
                  'Lock the Gate: Reconnect Daisy Chain, Yank hard on the lock',
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
-                 ' ',
-                 ' ',
+
                 ]);
                       
-    setTask(null);
+    setTask(task);
   }
 
   const completeTask = (index) => {
@@ -57,7 +62,7 @@ export default function Mono() {
 
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>HotSpot Photo Checklist</Text>
+        <Text style={styles.sectionTitle}>Guyed Tower Mapping Checklist: {task}</Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
@@ -78,12 +83,12 @@ export default function Mono() {
       {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}
-      >
-        <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={text => setTask(text)} />
+        style={styles.writeTaskWrapper}>
+
+        <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+            <Text style={styles.addText}>Start</Text>
             
           </View>
         </TouchableOpacity>
@@ -94,10 +99,11 @@ export default function Mono() {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: '#dedede',
   },
   tasksWrapper: {
     paddingTop: 80,
@@ -105,37 +111,48 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    shadowColor: '#020202',
+    shadowOffset: {width: -1, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 2
   },
   items: {
     marginTop: 30,
   },
   writeTaskWrapper: {
     position: 'absolute',
-    bottom: 60,
+    top: 10,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
   input: {
+    marginLeft: 15,
     paddingVertical: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     backgroundColor: '#FFF',
-    borderRadius: 60,
+    borderRadius: 12,
     borderColor: '#C0C0C0',
-    borderWidth: 1,
-    width: 250,
+    borderWidth: 2,
+    width: 275,
   },
   addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
+    width: 80,
+    height: 50,
+    backgroundColor: '#E8EAED',
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
-    borderWidth: 1,
+    borderWidth: 2,
   },
   addText: {},
+  stretch: {
+    width: 50,
+    height: 200,
+    resizeMode: 'stretch',
+  },
 });
+

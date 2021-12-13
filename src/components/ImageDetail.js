@@ -4,9 +4,8 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 const ImageDetail = ({ imageSource, title, story}) =>  {    
     return <View>
           <Text>{"\n"}</Text>
-          <Image source={imageSource} />
-          <Text style={styles.titleStyle}>{title}</Text>
-          <Text style={styles.textStyle}>{story}{"\n"}</Text>
+          <Image source={imageSource} style={{flex:1, alignSelf: 'center'}} resizeMode='contain'/>
+        
           
         </View>
 };
@@ -17,13 +16,14 @@ const styles = StyleSheet.create({
         margin: 12
     },
     titleStyle: {
+        textAlign: 'center',
         fontSize: 28,
         fontWeight: 'bold',
-        margin: 10,
-        color: 'red',
-        textShadowColor: 'black',
+        padding: '3%',
+        color: 'blue',
+        textShadowColor: '#dedede',
         textShadowOffset: {width: 2, height: 2},
-        textShadowRadius: 10
+        textShadowRadius: 3
         
         
     }

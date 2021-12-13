@@ -1,15 +1,34 @@
 import React, {useState} from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
+import moment from 'moment';
+import { Alert } from 'react-native';
+
+
+
+
 
 export default function Mono() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  var label = 'Start';
+
+  const scanTimeStart = () => {
+    var scanStart = new moment().format('LTS')
+    Alert.alert("Start Time for " + task + ":", scanStart);
+    
+  }
+  const scanTimeEnd = () => {
+    var scanEnd = new moment().format('LTS')
+    Alert.alert("End Time for " + task + ":", scanEnd);
+    
+  }
   
   const handleAddTask = () => {
+    
     Keyboard.dismiss();
-
-    setTaskItems(['JOB: ' + task,
+    scanTimeStart();
+    setTaskItems([
                  'Flight Plan: Identify Hazards, Contingency Plan, Check Weather/Wind/Temp',
                  'PPE on, Fire Ext. Ready, Phone and Drone Charged',
                  'Log into NOC: Call or Login Online, GET COMBO if needed',
@@ -27,14 +46,16 @@ export default function Mono() {
                  '* Platform Orbits: 0° Gimbal, 5 to 10ft below the mount',
                  '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal', 
                  'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
+                 'Perform SAQ Check',
                  'Check Photos on Laptop or Phone, SAVE',
                  'Remove Boards, Secure and Lock the Back',
                  'Lock the Gate: Reconnect Daisy Chain, Yank hard on the lock',
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
                  ]);
-                      
-    setTask(null);
+                     
+    setTask(task);
+    
   }
 
   const completeTask = (index) => {
@@ -42,7 +63,8 @@ export default function Mono() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy)
   }
-
+  
+ 
   return (
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
@@ -51,55 +73,48 @@ export default function Mono() {
           flexGrow: 1
         }}
         keyboardShouldPersistTaps='handled'
-      >
-
+      >       
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Monopole Mapping Checklist</Text>
+
+        <Text style={styles.sectionTitle}>Monopole PreCX: {task} </Text>
+        
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
-            taskItems.map((item, index) => {
+            taskItems.map((item, index) => {                
               return (
+                
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
-                </TouchableOpacity>
-                
+                </TouchableOpacity>               
                 
               )
+              
             })
           }
-          <Image
-          style={{
-            width: '100%'
-          }}
-          title="Ken" 
-          imageSource={require('../../assets/orbits.png')} 
-          story="One angry motherfucker and Ryu's twin brother, separated from birth."
-          />
-
-        </View>
-        
+         
+        </View>    
       </View>
-      
-      </ScrollView>
-
+     
+      </ScrollView>      
       {/* Write a task */}
-      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
+      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}     
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}
-      >
-        <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={text => setTask(text)} />
-        <TouchableOpacity onPress={() => handleAddTask()}>
+        style={styles.writeTaskWrapper}>
+
+        <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
+        
+        <TouchableOpacity onPress={() => { handleAddTask() }}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>GO</Text>
+            <Text style={styles.addText}>{label}</Text>
             
           </View>
         </TouchableOpacity>
         
       </KeyboardAvoidingView>
-
+      <Button title='End Scan' color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
       
     </View>
   );
@@ -108,7 +123,7 @@ export default function Mono() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: '#222',
   },
   tasksWrapper: {
     paddingTop: 80,
@@ -116,37 +131,44 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#fff',
+    shadowColor: '#dedede',
+    shadowOffset: {width: -1, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 2
   },
   items: {
     marginTop: 30,
+   
   },
   writeTaskWrapper: {
     position: 'absolute',
-    bottom: 60,
+    top: 10,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
   input: {
+    marginLeft: 15,
     paddingVertical: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     backgroundColor: '#FFF',
-    borderRadius: 60,
+    borderRadius: 12,
     borderColor: '#C0C0C0',
-    borderWidth: 1,
-    width: 250,
+    borderWidth: 2,
+    width: 275,
   },
   addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
+    width: 80,
+    height: 50,
+    backgroundColor: '#E8EAED',
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
-    borderWidth: 1,
+    borderWidth: 2,
   },
   addText: {},
   stretch: {

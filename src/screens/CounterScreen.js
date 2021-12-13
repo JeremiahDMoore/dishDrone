@@ -13,10 +13,7 @@ const CounterScreen = () => {
             }} />
            
             <Text>Current Count: {counter}</Text>
-            <ImageDetail 
-                title="Ken" 
-                imageSource={require('../../assets/dhalsim.jpeg')} 
-                        />
+            
         </View>
     );
 };

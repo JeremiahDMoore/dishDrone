@@ -1,58 +1,73 @@
 import React from "react";
 import { Text, StyleSheet, View, Button, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import ImageDetail from "../components/ImageDetail";
+import DateTool from "./components/DateTool";
+
+import ImageScreen from "./ImageScreen";
 
 const HomeScreen = ({ navigation }) => {
   
   return (
-  <View>
-    <Text style={styles.text}>DISH drone</Text>
+  
+<ScrollView style={styles.text}>
+    
+    <ImageDetail      
+      imageSource={require('../../assets/dish-drone-logo-small.png')}
+                />
+
+    <DateTool/>
+   
+    <Text> </Text>
+
     <Button
+      color="#000"
       onPress={()=> navigation.navigate('MonopoleChecklist')}
-      title="Monopole/SST Checklist"
+      title="Monopole/SST PreCX Checklist"
     />
+    <Text> </Text>
+    <Button
+      color="#000"
+      onPress={()=> navigation.navigate('MonopolePost')}
+      title="Monopole/SST PostCX Checklist"
+    />
+   <Text> </Text>
     <Button 
+      color="#000"
       onPress={()=> navigation.navigate('GuyedChecklist')}
-      title="Guyed Tower Checklist"
-    />    
+      title="Guyed Tower PreCX Checklist"
+    /> 
+    <Text> </Text>   
     <Button 
-      onPress={()=> navigation.navigate('HotSpotChecklist')}
-      title="HotSpot Checklist"
-    />
-    <Button 
+      color="#000"
       onPress={()=> navigation.navigate('Image')}
-      title="Example Photos"
+      title="Tip of the Day"
     />
-    <Button 
-      onPress={()=> navigation.navigate('Square')}
-      title="SQUARE"
-    />
-    <Button 
-      onPress={()=> navigation.navigate('OnBoarding')}
-      title="OnBoarding Demo"
-    />
-    <Button 
-      onPress={()=> navigation.navigate('Index')}
-      title="FLIGHT LOG SCREEN"
-    />
-    <Button 
-      onPress={()=> navigation.navigate('AppHome')}
-      title="APP HOME"
-    />
-    </View>
+
+    
+
+    </ScrollView>
     
     );
 };
 
 const styles = StyleSheet.create({
   text: {
+    backgroundColor: "#fff",
     textAlign: 'center',
     fontSize: 40,
     fontWeight: 'bold',
     margin: 10,
-    color: 'red',
-    textShadowColor: 'black',
-    textShadowOffset: {width: 2, height: 2},
-    textShadowRadius: 10
+    color: 'black',
+    textShadowColor: '#020202',
+    textShadowOffset: {width: 1, height: 2},
+    textShadowRadius: 2
+  },
+
+  button: {
+    backgroundColor: '#dedede',
+    padding: 10,
+    borderRadius: 10,
   }
 });
 

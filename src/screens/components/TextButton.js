@@ -1,23 +1,34 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const Task = (props) => {
+const TextButtton = () => {
 
   return (
-    <View style={styles.item}>
-      <View style={styles.itemLeft}>
-       
-        <Text style={styles.itemText}>{props.text}</Text>
-      </View>
-      <View style={styles.square}></View>
+    <View style={styles.button}>
+        <TouchableOpacity style={styles.button}/>
     </View>
     
   )
 }
 
-
-
 const styles = StyleSheet.create({
+    text: {
+        backgroundColor: "#fff",
+        textAlign: 'center',
+        fontSize: 40,
+        fontWeight: 'bold',
+        margin: 10,
+        color: 'red',
+        textShadowColor: '#020202',
+        textShadowOffset: {width: 1, height: 2},
+        textShadowRadius: 2
+      },
+    
+      button: {
+        backgroundColor: '#dedede',
+        padding: 10,
+        borderRadius: 10,
+      },
   item: {
     backgroundColor: '#FFF',
     padding: 15,
@@ -40,7 +51,7 @@ const styles = StyleSheet.create({
   square: {
     width: 24,
     height: 24,
-    backgroundColor: '#55BCF6',
+    backgroundColor: '#ec1f47',
     opacity: 0.4,
     borderRadius: 2,
     marginRight: 15,
@@ -52,10 +63,10 @@ const styles = StyleSheet.create({
   circular: {
     width: 12,
     height: 12,
-    borderColor: '#55BCF6',
-    borderWidth: 2,
-    borderRadius: 5,
+    backgroundColor: '#ec1f47',
+    borderWidth: 1,
+    borderRadius: 12,
   },
 });
 
-export default Task;
+export default TextButtton;

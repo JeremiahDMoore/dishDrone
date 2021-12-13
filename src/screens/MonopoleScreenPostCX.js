@@ -5,7 +5,8 @@ import moment from 'moment';
 import { Alert } from 'react-native';
 
 
-export default function GuyedChecklist() {
+
+export default function MonopolePost() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   var label = 'Start';
@@ -20,7 +21,6 @@ export default function GuyedChecklist() {
     Alert.alert("End Time for " + task + ":", scanEnd);
     
   }
-
   const handleAddTask = () => {
     Keyboard.dismiss();
     scanTimeStart();
@@ -28,32 +28,27 @@ export default function GuyedChecklist() {
                  'Flight Plan: Identify Hazards, Contingency Plan, Check Weather/Wind/Temp',
                  'PPE on, Fire Ext. Ready, Phone and Drone Charged',
                  'Log into NOC: Call or Login Online, GET COMBO if needed',
-                 'Hotspot Photos: Transformer, Power Path, H-frames, Meters, Fiber Vaults, Access Road Gate, Compound Gate, Signage, 6 photos of each guy anchor (all angles)',
+                 'Hotspot Photos: Transformer, Power Path, H-frames, Meters, Fiber Vaults, Access Road Gate, Compound Gate, Signage',
                  'Place Boards: Hi and Lo, Sunny Side of Tower, Compound or Wall',                 
+                 'Inspect Drone: Props, Fuselage, Lens/Gimbal, ',
                  'Power Drone ON: Open Litchi, Check and Adjust Camera Settings',
                  'Set Home Point: Drone Up, Flight Check (lights, satties, drift)',
                  'Set POI to Dead Center of Tower and SAVE', 
                  'Tower Overall Orbit: 30 to 50ft above tower, -45° to -60° gimbal',
                  'Upper Compound Orbit: tighten radius, -70° to -80° gimbal',
-                 'Tower Orbits: let photos run, 20 to 35ft above tower, -35° to -45° gimbal, 1 centered orbit for every mount above top guy pull off',
-                 'Down first Face: With 35° downward gimbal, descend at 2-3mph down the right half of the first face until tower base is in middle of the frame',
-                 'Rotate clockwise to left half of first Face, Up first face With 35° downward gimbal, climb at 2-3mph up the left half of first face until the highest tower appurtenance is in the middle of the frame',
-                 'Rotate clockwise to 2nd Face',
-                 'Down second Face: With 35° downward gimbal, descend at 2-3mph down the right half of the second Face until tower base is in middle of the frame',
-                 'Rotate clockwise to left half of second Face: With 35° downward gimbal, climb at 2-3mph up the left half of the second face until the highest tower appurtenance is in the middle of the frame',
-                 'Rotate Clockwise to 3rd Face',
-                 'Down third Face: With 35° downward gimbal, descend at 2-3mph down the right half of the third face until tower base is in middle of the frame',
-                 'Once at the bottom, complete the tower foundation/scaling orbit',
-                 'Lower Compound Orbit: POI = Center of Compound, 25 to 35ft AGL, -30° to -40° gimbal (steeper gimbal OK if higher Alt. needed)',
+                 'Tower Orbits: let photos run, center equip in frame 60% overlap, -45° gimbal @2min orbit, -30° gimbal @2min orbit, 0° gimbal @2min orbit,1 centered orbit for every mount, descend -10ft every orbit until bottom is visible',
+                 'Foundation Orbit: Manual orbit, Manual gimbal, center tower foundation in frame',
+                 'Lower Compound Orbit 1: POI = Center of Compound, 25 to 35ft AGL, -30° to -40° gimbal (steeper gimbal OK if higher Alt. needed)',
+                 'Lower Compound Orbit 2: POI = Center of Compound, wider orbit, 0 to -20° gimbal (steeper gimbal OK if higher Alt. needed)',
                  '* Platform Orbits: 0° Gimbal, 5 to 10ft below the mount',
-                 '* RAD Orbit: Land to reset altimeter, climb to RAD level, 0° Gimbal. tripod 360° CW at 2 points', 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
+                 'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
+                 'Perform SAQ Check',
                  'Check Photos on Laptop or Phone, SAVE',
                  'Remove Boards, Secure and Lock the Back',
                  'Lock the Gate: Reconnect Daisy Chain, Yank hard on the lock',
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
-
-                ]);
+                 ]);
                       
     setTask(task);
   }
@@ -65,6 +60,7 @@ export default function GuyedChecklist() {
   }
 
   return (
+    
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
       <ScrollView
@@ -76,7 +72,7 @@ export default function GuyedChecklist() {
 
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Guyed Tower Mapping Checklist: {task}</Text>
+        <Text style={styles.sectionTitle}>Monopole PostCX: {task}</Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
@@ -85,12 +81,20 @@ export default function GuyedChecklist() {
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
                 </TouchableOpacity>
+                
+                
               )
             })
           }
+         
         </View>
-      </View>
         
+          <View style={styles.addTaskWrapper}>
+            <TouchableOpacity onPress={this.saveData}>
+            </TouchableOpacity>
+            </View>
+      </View>
+      
       </ScrollView>
 
       {/* Write a task */}
@@ -102,17 +106,16 @@ export default function GuyedChecklist() {
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>Start</Text>
+            <Text style={styles.addText}>{label}</Text>
             
           </View>
         </TouchableOpacity>
-        
       </KeyboardAvoidingView>
       <Button title='End Scan' color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
+     
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -171,4 +174,3 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
 });
-
