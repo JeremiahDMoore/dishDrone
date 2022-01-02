@@ -3,7 +3,10 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import Task from './components/Task';
 import moment from 'moment';
 import { Alert } from 'react-native';
+import HomeScreen from './HomeScreen';
 
+var currentTime = new moment().format('LTS')
+var hideButton = true;
 
 
 export default function MonopolePost() {
@@ -11,16 +14,19 @@ export default function MonopolePost() {
   const [taskItems, setTaskItems] = useState([]);
   var label = 'Start';
 
+
   const scanTimeStart = () => {
-    var scanStart = new moment().format('LTS')
-    Alert.alert("Start Time for " + task + ":", scanStart);
-    
+    var scanStart = currentTime;
+    Alert.alert( task + " Started: " + scanStart ); 
+    hideButton = false;   
   }
   const scanTimeEnd = () => {
-    var scanEnd = new moment().format('LTS')
-    Alert.alert("End Time for " + task + ":", scanEnd);
-    
+    currentTime = new moment().format('LTS')
+    Alert.alert("Mission Time for " + task + " to " + currentTime);
+    hideButton = true;
+
   }
+
   const handleAddTask = () => {
     Keyboard.dismiss();
     scanTimeStart();
@@ -42,15 +48,17 @@ export default function MonopolePost() {
                  'Lower Compound Orbit 2: POI = Center of Compound, wider orbit, 0 to -20° gimbal (steeper gimbal OK if higher Alt. needed)',
                  '* Platform Orbits: 0° Gimbal, 5 to 10ft below the mount',
                  'Tower Access Road: 15ft + AGL, 360° CW rotation at beginning of road, fly slowly to access gate, stop at sign',
-                 'Perform SAQ Check',
-                 'Check Photos on Laptop or Phone, SAVE',
-                 'Remove Boards, Secure and Lock the Back',
+                 'Check Nexsys One Data/SAQ if needed',
+                 'Check Photos on Laptop, RC, or Phone (SAVE on your computer as soon as possible)',
+                 'Remove Boards, Secure and Lock the Back of the Truck',
                  'Lock the Gate: Reconnect Daisy Chain, Yank hard on the lock',
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
                  ]);
                       
-    setTask(task);
+                 setTask(task + " --" + currentTime);
+                 Keyboard.dismiss();
+
   }
 
   const completeTask = (index) => {
@@ -59,8 +67,7 @@ export default function MonopolePost() {
     setTaskItems(itemsCopy)
   }
 
-  return (
-    
+  return (    
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
       <ScrollView
@@ -69,10 +76,9 @@ export default function MonopolePost() {
         }}
         keyboardShouldPersistTaps='handled'
       >
-
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Monopole PostCX: {task}</Text>
+        <Text style={styles.sectionTitle}>Monopole PostCX: </Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
@@ -80,39 +86,35 @@ export default function MonopolePost() {
               return (
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
-                </TouchableOpacity>
-                
-                
+                </TouchableOpacity>                                
               )
             })
-          }
-         
+          }         
         </View>
-        
           <View style={styles.addTaskWrapper}>
             <TouchableOpacity onPress={this.saveData}>
             </TouchableOpacity>
             </View>
-      </View>
-      
+      </View>      
       </ScrollView>
-
+      <Button title={'End Scan \n'} color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
       {/* Write a task */}
       {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}>
-
+        style={styles.writeTaskWrapper}
+        enabled={false}
+        >
+          
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>{label}</Text>
+            <Text style={styles.addText}>{hideButton ? "Start" : "Reset"}</Text>
             
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-      <Button title='End Scan' color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
-     
+           
     </View>
   );
 }
@@ -156,6 +158,11 @@ const styles = StyleSheet.create({
     borderColor: '#C0C0C0',
     borderWidth: 2,
     width: 275,
+  },
+  none: {
+    height: 0,
+    width: 0
+
   },
   addWrapper: {
     width: 80,

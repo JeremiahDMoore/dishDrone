@@ -3,6 +3,10 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import Task from './components/Task';
 import moment from 'moment';
 import { Alert } from 'react-native';
+import HomeScreen from './HomeScreen';
+
+var currentTime = new moment().format('LTS')
+var hideButton = true;
 
 
 export default function GuyedChecklist() {
@@ -10,15 +14,17 @@ export default function GuyedChecklist() {
   const [taskItems, setTaskItems] = useState([]);
   var label = 'Start';
 
+
   const scanTimeStart = () => {
-    var scanStart = new moment().format('LTS')
-    Alert.alert("Start Time for " + task + ":", scanStart);
-    
+    var scanStart = currentTime;
+    Alert.alert( task + " Started: " + scanStart ); 
+    hideButton = false;   
   }
   const scanTimeEnd = () => {
-    var scanEnd = new moment().format('LTS')
-    Alert.alert("End Time for " + task + ":", scanEnd);
-    
+    currentTime = new moment().format('LTS')
+    Alert.alert("Mission Time for " + task + " to " + currentTime);
+    hideButton = true;
+
   }
 
   const handleAddTask = () => {
@@ -55,7 +61,9 @@ export default function GuyedChecklist() {
 
                 ]);
                       
-    setTask(task);
+                 setTask(task + " --" + currentTime);
+                 Keyboard.dismiss();
+
   }
 
   const completeTask = (index) => {
@@ -64,7 +72,7 @@ export default function GuyedChecklist() {
     setTaskItems(itemsCopy)
   }
 
-  return (
+  return (    
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
       <ScrollView
@@ -73,10 +81,9 @@ export default function GuyedChecklist() {
         }}
         keyboardShouldPersistTaps='handled'
       >
-
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Guyed Tower Mapping Checklist: {task}</Text>
+        <Text style={styles.sectionTitle}>Guyed PreCX & PostCX: </Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
@@ -84,35 +91,38 @@ export default function GuyedChecklist() {
               return (
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
-                </TouchableOpacity>
+                </TouchableOpacity>                                
               )
             })
-          }
+          }         
         </View>
-      </View>
-        
+          <View style={styles.addTaskWrapper}>
+            <TouchableOpacity onPress={this.saveData}>
+            </TouchableOpacity>
+            </View>
+      </View>      
       </ScrollView>
-
+      <Button title={'End Scan \n'} color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
       {/* Write a task */}
       {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}>
-
+        style={styles.writeTaskWrapper}
+        enabled={false}
+        >
+          
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>Start</Text>
+            <Text style={styles.addText}>{hideButton ? "Start" : "Reset"}</Text>
             
           </View>
         </TouchableOpacity>
-        
       </KeyboardAvoidingView>
-      <Button title='End Scan' color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
+           
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -154,6 +164,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     width: 275,
   },
+  none: {
+    height: 0,
+    width: 0
+
+  },
   addWrapper: {
     width: 80,
     height: 50,
@@ -171,4 +186,3 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
 });
-

@@ -21,30 +21,28 @@ const HomeScreen = ({ navigation }) => {
     <Text> </Text>
 
     <Button
-      color="#000"
+      color="#555"
       onPress={()=> navigation.navigate('MonopoleChecklist')}
-      title="Monopole/SST PreCX Checklist"
+      title="Monopole/SST PreCX"
     />
     <Text> </Text>
     <Button
-      color="#000"
+      color="#555"
       onPress={()=> navigation.navigate('MonopolePost')}
-      title="Monopole/SST PostCX Checklist"
+      title="Monopole/SST PostCX"
     />
    <Text> </Text>
     <Button 
-      color="#000"
+      color="#555"
       onPress={()=> navigation.navigate('GuyedChecklist')}
-      title="Guyed Tower PreCX Checklist"
+      title="Guyed Tower PreCX and PostCX"
     /> 
     <Text> </Text>   
     <Button 
-      color="#000"
+      color="#555"
       onPress={()=> navigation.navigate('Image')}
       title="Tip of the Day"
-    />
-
-    
+    />    
 
     </ScrollView>
     

@@ -3,9 +3,10 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import Task from './components/Task';
 import moment from 'moment';
 import { Alert } from 'react-native';
+import HomeScreen from './HomeScreen';
 
-
-
+var currentTime = new moment().format('LTS')
+var hideButton = true;
 
 
 export default function Mono() {
@@ -13,19 +14,20 @@ export default function Mono() {
   const [taskItems, setTaskItems] = useState([]);
   var label = 'Start';
 
+
   const scanTimeStart = () => {
-    var scanStart = new moment().format('LTS')
-    Alert.alert("Start Time for " + task + ":", scanStart);
-    
+    var scanStart = currentTime;
+    Alert.alert( task + " Started: " + scanStart ); 
+    hideButton = false;   
   }
   const scanTimeEnd = () => {
-    var scanEnd = new moment().format('LTS')
-    Alert.alert("End Time for " + task + ":", scanEnd);
-    
+    currentTime = new moment().format('LTS')
+    Alert.alert("Mission Time for " + task + " to " + currentTime);
+    hideButton = true;
+
   }
-  
+
   const handleAddTask = () => {
-    
     Keyboard.dismiss();
     scanTimeStart();
     setTaskItems([
@@ -53,9 +55,10 @@ export default function Mono() {
                  'Log Out of NOC: Call or Logout Online if necessary',
                  'Do Paperwork (if slow/no internet just write down and do at home)',
                  ]);
-                     
-    setTask(task);
-    
+                      
+                 setTask(task + " --" + currentTime);
+                 Keyboard.dismiss();
+
   }
 
   const completeTask = (index) => {
@@ -63,9 +66,8 @@ export default function Mono() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy)
   }
-  
- 
-  return (
+
+  return (    
     <View style={styles.container}>
       {/* Added this scroll view to enable scrolling when list gets longer than the page */}
       <ScrollView
@@ -73,49 +75,46 @@ export default function Mono() {
           flexGrow: 1
         }}
         keyboardShouldPersistTaps='handled'
-      >       
+      >
       {/* Today's Tasks */}
       <View style={styles.tasksWrapper}>
-
-        <Text style={styles.sectionTitle}>Monopole PreCX: {task} </Text>
-        
+        <Text style={styles.sectionTitle}>Monopole PreCX: </Text>
         <View style={styles.items}>
           {/* This is where the tasks will go! */}
           {
-            taskItems.map((item, index) => {                
+            taskItems.map((item, index) => {
               return (
-                
                 <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
                   <Task text={item} />                  
-                </TouchableOpacity>               
-                
+                </TouchableOpacity>                                
               )
-              
             })
-          }
-         
-        </View>    
-      </View>
-     
-      </ScrollView>      
+          }         
+        </View>
+          <View style={styles.addTaskWrapper}>
+            <TouchableOpacity onPress={this.saveData}>
+            </TouchableOpacity>
+            </View>
+      </View>      
+      </ScrollView>
+      <Button title={'End Scan \n'} color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
       {/* Write a task */}
-      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}     
+      {/* Uses a keyboard avoiding view which ensures the keyboard does not cover the items on screen */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.writeTaskWrapper}>
-
+        style={styles.writeTaskWrapper}
+        enabled={false}
+        >
+          
         <TextInput style={styles.input} placeholder={' Address/ Job #'} value={task} onChangeText={task => setTask(task)} />
-        
-        <TouchableOpacity onPress={() => { handleAddTask() }}>
+        <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>{label}</Text>
+            <Text style={styles.addText}>{hideButton ? "Start" : "Reset"}</Text>
             
           </View>
         </TouchableOpacity>
-        
       </KeyboardAvoidingView>
-      <Button title='End Scan' color='#ec1f47'  onPress={() => { scanTimeEnd() }} />
-      
+           
     </View>
   );
 }
@@ -159,6 +158,11 @@ const styles = StyleSheet.create({
     borderColor: '#C0C0C0',
     borderWidth: 2,
     width: 275,
+  },
+  none: {
+    height: 0,
+    width: 0
+
   },
   addWrapper: {
     width: 80,

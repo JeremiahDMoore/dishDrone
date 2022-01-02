@@ -13,8 +13,7 @@ class DateTool extends React.Component {
     return (
       <Text style={styles.text}>
         {this.state.abb_create}
-        {'\n'}
-        
+        {'\n'}  
         
       </Text>
     );

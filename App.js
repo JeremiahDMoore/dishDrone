@@ -17,9 +17,6 @@ import ShowScreen from './src/screens/ShowScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import EditScreen from './src/screens/EditScreen';
 
-
-
-
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
@@ -39,7 +36,7 @@ const navigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     defaultNavigationOptions: {
-      title: 'Dish Drone',
+      title: 'Dish Drone '
       //headerMode: 'none',
       //headerVisible: false,
       //headerShown: false
