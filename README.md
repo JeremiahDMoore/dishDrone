@@ -1,11 +1,11 @@
 # dishDrone
-support mobile app for Dish drone pilots
+## support mobile app for Dish drone pilots
 
 Checklist of procedures for tower scans of:
-
-Guyed Towers
-Monopoles
-Post-Construction
-Pre-Construction
-
+<ul>
+<li>Guyed Towers
+<li>Monopoles
+<li>Post-Construction
+<li>Pre-Construction
+</ul>
 Keeps the time at each tower, and a checklist for each tower type. Also a Tips and Tricks section.
